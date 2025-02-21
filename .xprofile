@@ -1,0 +1,10 @@
+# vmware specific, only for testing
+xrandr --newmode "2552x1200_60.00"  256.00  2552 2720 2992 3432  1200 1203 1213 1245 -hsync +vsync
+xrandr --addmode Virtual-1 2552x1200_60.00
+xrandr --output Virtual-1 --mode 2552x1200_60.00
+
+# Wallpaper
+feh --no-fehbg --bg-fill ~/Pictures/Wallpapers/f-104.jpg &
+
+# Compositor
+picom &
