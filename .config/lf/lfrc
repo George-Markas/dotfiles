@@ -1,0 +1,15 @@
+# Basic settings
+set shell sh
+set shellopts '-eu'
+set hidden true
+set icons true
+set period 1
+set tabstop 4
+set info size
+set ifs '\n'
+
+# Image previews
+set previewer ctpv
+set cleaner ctpvclear
+&ctpv -s $id
+&ctpvquit $id

@@ -1,14 +1,31 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-bindkey -v
-# End of lines configured by zsh-newuser-install
-
 PROMPT='%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f '
+bindkey -v
 
-alias ls='ls -a --color=auto'
-alias grep='grep --color=auto'
+# Load aliases
+[[ -r "${ZDOTDIR:-$HOME/.config/zsh}/.zaliases" ]] && source "${ZDOTDIR:-$HOME/.config/zsh}/.zaliases"
+
+# Tab completions
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+_comp_options+=(globdots)
+compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump-$ZSH_VERSION"
+
+# History
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_save_no_dups
+setopt inc_append_history
+setopt share_history
+
+# Change directory when quitting lf
+lfcd () {
+	cd "$(command lf -print-last-dir "$@")"
+}
 
 # Plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

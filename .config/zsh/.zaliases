@@ -1,0 +1,11 @@
+#!/bin/sh
+
+alias ls="ls -a --color=auto --group-directories-first"
+alias ll="ls -alh --color=auto --group-directories-first"
+alias grep="grep --color=auto"
+alias diff="diff --color=auto"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -vI"
+alias mkd="mkdir -pv"
+alias lf="lfcd"
