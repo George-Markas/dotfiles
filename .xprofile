@@ -1,5 +1,5 @@
 # Wallpaper
-feh --no-fehbg --bg-fill ~/Wallpapers/f-104.jpg &
+feh --no-fehbg --bg-fill ~/Wallpapers/f-104g.jpg &
 
 # Compositor
 picom &
