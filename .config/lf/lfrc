@@ -33,3 +33,8 @@ cmd open ${{
         *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
 }}
+
+# Trash
+cmd tr %trash-put -- $fx
+cmd tre %trash-empty
+cmd trr %trash-restore
