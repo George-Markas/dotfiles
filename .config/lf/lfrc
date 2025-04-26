@@ -6,10 +6,30 @@ set icons true
 set period 1
 set tabstop 4
 set info size
-set ifs '\n'
+set ifs "\n"
 
 # Image previews
 set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
+
+# Run shell command
+map t :shell
+
+# Movement
+map gh cd ~
+map gd cd ~/Downloads
+map gc cd ~/.config
+map gt cd ~/.local/share/Trash/files
+
+# Open files
+cmd open ${{
+    test -L $f && f=$(readlink -f $f)
+    case "$(file --mime-type "$f" -b)" in
+        text/*|*.c|*.h) $EDITOR $fx;;
+        audio/*) nohup $AUDIO_PLAYER $f &>/dev/null &;;
+        video/*) nohup $VIDEO_PLAYER $f &>/dev/null &;;
+        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
