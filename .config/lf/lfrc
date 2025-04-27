@@ -25,9 +25,8 @@ map gt cd ~/.local/share/Trash/files
 
 # Open files
 cmd open ${{
-    test -L $f && f=$(readlink -f $f)
-    case "$(file --mime-type "$f" -b)" in
-        text/*|*.c|*.h) $EDITOR $fx;;
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
         audio/*) nohup $AUDIO_PLAYER $f &>/dev/null &;;
         video/*) nohup $VIDEO_PLAYER $f &>/dev/null &;;
         *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
