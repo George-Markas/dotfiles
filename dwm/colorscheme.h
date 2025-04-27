@@ -1,5 +1,5 @@
-static const char col_gray1[]  = "#000000";
-static const char col_gray2[]  = "#444444";
-static const char col_gray3[]  = "#cdd6f4";
-static const char col_gray4[]  = "#000000";
-static const char col_accent[] = "#6376cf";
+static const char col_gray1[]  = "#101010";
+static const char col_gray2[]  = "#3d3d3d";
+static const char col_gray3[]  = "#999999";
+static const char col_gray4[]  = "#ffffff";
+static const char col_accent[] = "#224488";
