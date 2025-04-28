@@ -8,8 +8,6 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export EDITOR="vim"
 export TERMINAL="kitty"
 export OPENER="xdg-open"
-export AUDIO_PLAYER="vlc"
-export VIDEO_PLAYER="vlc"
 
 # Zsh configs directory
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"

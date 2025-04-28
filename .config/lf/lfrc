@@ -1,4 +1,4 @@
-# Basic settings
+# Options
 set shell sh
 set shellopts '-eu'
 set hidden true
@@ -7,33 +7,59 @@ set period 1
 set tabstop 4
 set info size
 set ifs "\n"
+set autoquit true
 
-# Image previews
 set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
 
-# Run shell command
-map t :shell
-
-# Movement
-map gh cd ~
-map gd cd ~/Downloads
-map gc cd ~/.config
-map gt cd ~/.local/share/Trash/files
-
 # Open files
 cmd open ${{
     case $(file --mime-type -Lb $f) in
         text/*) lf -remote "send $id \$$EDITOR \$fx";;
-        audio/*) $AUDIO_PLAYER $f >/dev/null 2>&1;;
-        video/*) $VIDEO_PLAYER $f >/dev/null 2>&1;;
+        audio/*|video/*) mpv -quiet $f >/dev/null 2>&1;;
+        application/pdf) zathura $f >/dev/null 2>&1;;
         *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
     esac
 }}
 
-# Trash
-cmd tr %trash-put -- $fx
+cmd mkdir %mkdir "$@"
+
+cmd extract %{{
+    set -- $fx
+	printf "Extract %d selected? [y/n] " "$#"
+	read ans
+	[[ $ans =~ [Yy] ]] && {
+        for f in $fx; do
+		    case $fx in
+                *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+                *.tar.gz|*.tgz) tar xzvf $f;;
+                *.tar.xz|*.txz) tar xJvf $f;;
+                *.tar) tar xf $f;;
+                *.zip) unzip $f;;
+                *.rar) unrar x $f;;
+                *.7z) 7z x $f;;
+                *) printf "Unsupported format :(";;
+		    esac
+        done
+	}
+}}
+
+cmd trash %trash-put -- $fx
 cmd tre %trash-empty
 cmd trr %trash-restore
+
+# Bindings
+map t :shell
+map p :paste; clear
+map mk push :mkdir<space>
+map m
+map ex extract
+map e
+map D trash
+
+map gh cd ~
+map gd cd ~/Downloads
+map gc cd ~/.config
+map gt cd ~/.local/share/Trash/files
