@@ -65,7 +65,7 @@ cmd archive %{{
 }}
 
 cmd fzf_jump ${{
-    res="$(find . | fzf --reverse --header="Jump to...")"
+    res="$(find . -maxdepth 1 | fzf --reverse --header="Jump to...")"
     if [ -n "$res" ]; then
         if [ -d "$res" ]; then
             cmd="cd"
