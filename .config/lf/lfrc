@@ -46,6 +46,24 @@ cmd extract %{{
 	}
 }}
 
+cmd archive %{{
+    set -- $fx
+    printf "Add %d selected to archive? [y/n] " "$#"
+    read ans
+	[[ $ans =~ [Yy] ]] && {
+        printf "New archive name: "
+        read archive_name
+        printf "Select format: [\e[0;31m0\e[0m] zip [\e[0;31m1\e[0m] 7z [\e[0;31m2\e[0m] tar "
+        read sel
+        case $sel in
+            0) zip "$archive_name" $fx;;
+            1) 7z a -mx9 "$archive_name" $fx;;
+            2) tar -cvf "$archive_name".tar $fx;;
+            *) printf "Invalid format :(";;
+        esac
+    }
+}}
+
 cmd trash %trash-put -- $fx
 cmd tre %trash-empty
 cmd trr %trash-restore
@@ -56,6 +74,7 @@ map p :paste; clear
 map mk push :mkdir<space>
 map m
 map ex extract
+map ar archive
 map e
 map D trash
 
