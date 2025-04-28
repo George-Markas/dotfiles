@@ -1,0 +1,69 @@
+configuration {
+    display-drun: "~>";
+    drun-display-format: "{name}";
+    font: "Hack Nerd Font 14";
+    modi: "window,run,drun";
+}
+
+@theme "/dev/null"
+
+* {
+    bordercolor:         #224488;
+    background:          #101010;
+    background-selected: #224488;
+    foreground:          #999999;
+    foreground-selected: #ffffff;
+
+    border: 2;
+}
+
+#window {
+    border: 2;
+    border-color: @bordercolor;
+    background-color: @background;
+    width: 25%;
+}
+
+#element {
+    background-color: transparent;
+    text-color: @foreground;
+    padding: 2 4;
+}
+
+#element selected {
+    background-color: @background-selected;
+    text-color: @foreground-selected;
+}
+
+#element-text {
+    background-color: transparent;
+    text-color: inherit;
+}
+
+#entry {
+    background-color: @background;
+    text-color: @foreground;
+}
+
+#inputbar {
+    children: [prompt, entry];
+    background-color: @background;
+}
+
+#listview {
+    background-color: @background;
+    columns: 1;
+    lines: 8;
+}
+
+#mainbox {
+    children: [inputbar, listview];
+    background-color: @background;
+}
+
+#prompt {
+    enabled: true;
+    background-color: @background;
+    text-color: @foreground;
+    padding: 0 5;
+}
