@@ -65,7 +65,7 @@ cmd archive %{{
 }}
 
 cmd fzf_jump ${{
-    res="$(find . -maxdepth 1 | fzf --reverse --header="Jump to...")"
+    res="$(find . -maxdepth 1 | fzf --reverse --header="Jump to location:")"
     if [ -n "$res" ]; then
         if [ -d "$res" ]; then
             cmd="cd"
@@ -79,12 +79,14 @@ cmd fzf_jump ${{
 
 cmd fzf_search ${{
     cmd="rg --hidden --column --line-number --no-heading --color=always --smart-case"
-    fzf --ansi --disabled --layout=reverse --header="Search file contents..." --delimiter=: \
+    fzf --ansi --disabled --layout=reverse --header="Search file contents:" --delimiter=: \
         --bind="start:reload([ -n {q} ] && $cmd -- {q} || true)" \
         --bind="change:reload([ -n {q} ] && $cmd -- {q} || true)" \
         --bind='enter:become(lf -remote "send $id select \"$(printf "%s" {1} | sed '\''s/\\/\\\\/g;s/"/\\"/g'\'')\"")' \
         --preview='bat --color=always --highlight-line={2} -- {1}'
 }}
+
+cmd share $curl -F"file=@$fx" https://0x0.st | xclip -selection c
 
 cmd trash %trash-put -- $fx
 cmd tre %trash-empty
@@ -93,17 +95,20 @@ cmd trr %trash-restore
 # Bindings
 map t :shell
 map p :paste; clear
-map mk push :mkdir<space>
-map m
+map mk :mkdir<space>
 map ex extract
 map ar archive
-map e
+map sh share
 map D trash
 
-map <c-f> :fzf_jump
-map gr :fzf_search
+map <c-e> :fzf_jump
+map <c-f> :fzf_search
 
 map gh cd ~
 map gd cd ~/Downloads
 map gc cd ~/.config
 map gt cd ~/.local/share/Trash/files
+
+# Unmap
+map m
+map e

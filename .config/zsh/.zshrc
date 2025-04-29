@@ -1,4 +1,3 @@
-PROMPT='%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f '
 bindkey -v
 
 # Load aliases
@@ -26,6 +25,19 @@ setopt share_history
 lfcd () {
 	cd "$(command lf -print-last-dir "$@")"
 }
+
+# Display git branch
+function git_branch_name() {
+    branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {printf $NF}')
+    if [[ $branch == "" ]]; then
+        :
+    else
+        echo '(%F{magenta}'$branch'%f)'
+    fi
+}
+
+setopt prompt_subst
+PROMPT='%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f $(git_branch_name) '
 
 # Plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
