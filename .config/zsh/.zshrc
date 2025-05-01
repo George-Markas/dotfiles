@@ -21,23 +21,21 @@ setopt hist_save_no_dups
 setopt inc_append_history
 setopt share_history
 
+# Git info
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:git*' formats " (%F{magenta}%b%f)"
+precmd() {
+    vcs_info
+}
+
 # Change directory when quitting lf
-lfcd () {
+lfcd() {
 	cd "$(command lf -print-last-dir "$@")"
 }
 
-# Display git branch
-function git_branch_name() {
-    branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {printf $NF}')
-    if [[ $branch == "" ]]; then
-        :
-    else
-        echo '(%F{magenta}'$branch'%f)'
-    fi
-}
-
 setopt prompt_subst
-PROMPT='%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f $(git_branch_name) '
+PROMPT='%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f${vcs_info_msg_0_} '
 
 # Plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
