@@ -16,6 +16,7 @@ set shiftround
 set expandtab
 set smarttab
 set nowrap
+set belloff=all
 
 " Change cursor based on mode 
 let &t_SI.="\e[5 q" "SI = INSERT mode

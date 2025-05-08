@@ -24,7 +24,7 @@ setopt share_history
 # Git info
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:git*' formats " (%F{magenta}%b%f)"
+zstyle ':vcs_info:git*' formats " %F{15}(%f%F{13}%b%f%F{15})%f"
 precmd() {
     vcs_info
 }
