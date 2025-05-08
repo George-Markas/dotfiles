@@ -64,33 +64,24 @@ cmd archive %{{
     }
 }}
 
-cmd fzf_jump ${{
-    res="$(find . -maxdepth 1 | fzf --reverse --header="Jump to location:")"
-    if [ -n "$res" ]; then
-        if [ -d "$res" ]; then
-            cmd="cd"
-        else
-            cmd="select"
-        fi
-        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
-        lf -remote "send $id $cmd \"$res\""
-    fi
-}}
-
 cmd fzf_search ${{
     cmd="rg --hidden --column --line-number --no-heading --color=always --smart-case"
-    fzf --ansi --disabled --layout=reverse --header="Search file contents:" --delimiter=: \
+    fzf --ansi --disabled --layout=reverse --header="Search file contents" --delimiter=: \
         --bind="start:reload([ -n {q} ] && $cmd -- {q} || true)" \
         --bind="change:reload([ -n {q} ] && $cmd -- {q} || true)" \
         --bind='enter:become(lf -remote "send $id select \"$(printf "%s" {1} | sed '\''s/\\/\\\\/g;s/"/\\"/g'\'')\"")' \
         --preview='bat --color=always --highlight-line={2} -- {1}'
 }}
 
-cmd share $curl -F"file=@$fx" https://0x0.st | xclip -selection c
-
 cmd trash %trash-put -- $fx
-cmd tre %trash-empty
 cmd trr %trash-restore
+cmd tre %{{
+    printf "Permanently delete trashed files? [y/n] "
+    read ans
+    [[ $ans =~ [Yy] ]] && {
+        trash-empty
+    }
+}}
 
 # Bindings
 map t :shell
@@ -98,10 +89,8 @@ map p :paste; clear
 map mk :mkdir<space>
 map ex extract
 map ar archive
-map sh share
 map D trash
 
-map <c-e> :fzf_jump
 map <c-f> :fzf_search
 
 map gh cd ~
