@@ -14,6 +14,7 @@ compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump-$ZSH_VERSION"
 export HISTSIZE=10000
 export SAVEHIST=10000
 export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 setopt hist_ignore_dups
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
