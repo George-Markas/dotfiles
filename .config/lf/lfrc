@@ -102,7 +102,7 @@ cmd tre %{{
 map t :shell
 map p :paste; clear
 map Y yank_filepath
-map mk :mkdir<space>
+map mk push :mkdir<space>
 map ex extract
 map ar archive
 map D trash

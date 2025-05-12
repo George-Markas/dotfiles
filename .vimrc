@@ -1,7 +1,6 @@
 set nocompatible
 set t_Co=256
 syntax enable
-set number
 filetype indent on
 set nohlsearch
 set incsearch
