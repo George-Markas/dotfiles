@@ -6,3 +6,6 @@ picom &
 
 # Notifications daemon
 dunst &
+
+# Status
+dwmblocks &
