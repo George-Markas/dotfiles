@@ -12,7 +12,7 @@ static const int swallowfloating            = 0;        /* 1 means swallow float
 static const int showbar                    = 1;        /* 0 means no bar */
 static const int topbar                     = 1;        /* 0 means bottom bar */
 static const Gap default_gap                = {.isgap = 1, .realgap = 10, .gappx = 6};
-static const char *fonts[]                  = { "Hack Nerd Font:size=14" };
+static const char *fonts[]                  = { "Hack Nerd Font:size=14", "NotoColorEmoji:pixelsize=14:antialias=true:autohint=true" };
 static const char dmenufont[]               = "Hack Nerd Font:size=13";
 
 #include "colorscheme.h"
@@ -30,7 +30,8 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	
+    /* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "kitty",   NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
@@ -61,12 +62,14 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static char dmenumon[2] = "0";  /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_accent, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *rofi[]     = { "rofi", "-show", "drun", NULL };
 
+#include <X11/XF86keysym.h>
 #include "movestack.c"
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
@@ -110,6 +113,9 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_m,      quit,           {0} },
+    { 0,                            XF86XK_AudioRaiseVolume, spawn, SHCMD("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+; kill -39 $(pidof dwmblocks)") },
+    { 0,                            XF86XK_AudioLowerVolume, spawn, SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -39 $(pidof dwmblocks)") },
+    { 0,                            XF86XK_AudioMute,        spawn, SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ toggle; kill -39 $(pidof dwmblocks)") },
 };
 
 /* button definitions */
