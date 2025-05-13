@@ -2,4 +2,4 @@
 
 clock=$(date '+%a %d/%m/%y %H:%M')
 
-echo "[$clock]"
+echo "^c#CCCCCC^[$clock]^d^"

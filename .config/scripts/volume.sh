@@ -4,17 +4,9 @@ vol_info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
 muted=$(echo "$vol_info" | grep -o "MUTED")
 
 if [ -n "$muted" ]; then
-    icon="󰸈"
-    vol_perc="MUTED"
+    vol_perc="^c#E84C58^MUTED"
 else
-    vol_perc=$(echo "$vol_info" | cut -b 9-12 | awk '{print $1 * 100}')
-    case 1 in
-        $((vol_perc >= 65)) ) icon="󰕾" ;;
-        $((vol_perc >= 30)) ) icon="󰖀" ;;
-        $((vol_perc >= 1)) ) icon="󰕿" ;;
-        * ) icon="󰝟" ;;
-    esac
-    vol_perc="$vol_perc%"
+    vol_perc="$(echo "$vol_info" | awk '{printf "VOL %.0f%%", substr($0,9,4) * 100}')"
 fi
 
-echo "[$icon $vol_perc]"
+echo "^c#CCCCCC^[$vol_perc^c#CCCCCC^]^d^"
