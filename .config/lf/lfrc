@@ -92,7 +92,7 @@ cmd trash %trash-put -- $fx
 cmd trr %trash-restore
 cmd tre %{{
     count=$(find ~/.local/share/Trash/files -type f -printf '.' | wc -c)
-    printf "Permanently delete %d files? [y/n] " "$count"
+    printf "Permanently delete %d file(s)? [y/n] " "$count"
     read ans
     [[ $ans =~ [Yy] ]] && {
         trash-empty
