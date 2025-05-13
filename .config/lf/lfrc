@@ -91,7 +91,8 @@ cmd fzf_jump ${{
 cmd trash %trash-put -- $fx
 cmd trr %trash-restore
 cmd tre %{{
-    printf "Permanently delete trashed files? [y/n] "
+    count=$(find ~/.local/share/Trash/files -type f -printf '.' | wc -c)
+    printf "Permanently delete %d files? [y/n] " "$count"
     read ans
     [[ $ans =~ [Yy] ]] && {
         trash-empty
