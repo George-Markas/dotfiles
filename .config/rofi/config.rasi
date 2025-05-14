@@ -1,7 +1,7 @@
 configuration {
     display-drun: "~>";
     drun-display-format: "{name}";
-    font: "Hack Nerd Font 14";
+    font: "Hack Nerd Font 16";
     modi: "window,run,drun";
 }
 
@@ -53,7 +53,7 @@ configuration {
 #listview {
     background-color: @background;
     columns: 1;
-    lines: 8;
+    lines: 7;
 }
 
 #mainbox {

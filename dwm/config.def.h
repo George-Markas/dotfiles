@@ -12,8 +12,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Hack Nerd Font:size=14", "NotoColorEmoji:pixelsize=14:antialias=true:autohint=true" };
-static const char dmenufont[]       = "Hack Nerd Font:size=13";
+static const char *fonts[]          = { "Cozette:size=13" };
+static const char dmenufont[]       = "Hack Nerd Font:size=12";
 
 #include "colorscheme.h"
 static const char *colors[][3]      = {
@@ -60,7 +60,6 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
 #define STATUSBAR "dwmblocks"
 
 /* commands */
@@ -117,7 +116,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_m,      quit,           {0} },
     { 0,                            XF86XK_AudioRaiseVolume, spawn, SHCMD("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+; kill -39 $(pidof dwmblocks)") },
     { 0,                            XF86XK_AudioLowerVolume, spawn, SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -39 $(pidof dwmblocks)") },
-    { 0,                            XF86XK_AudioMute,        spawn, SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ toggle; kill -39 $(pidof dwmblocks)") },
+    { 0,                            XF86XK_AudioMute,        spawn, SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -39 $(pidof dwmblocks)") },
 };
 
 /* button definitions */
