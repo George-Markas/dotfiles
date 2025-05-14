@@ -1,5 +1,5 @@
 # PATH
-export PATH=~/.config/scripts:$PATH
+export PATH=~/.local/bin/statusbar:$PATH
 
 # XDG user directories
 export XDG_CONFIG_HOME="$HOME/.config"
