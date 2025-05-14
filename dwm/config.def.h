@@ -22,6 +22,15 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_accent,  col_accent },
 };
 
+static const char *const autostart[] = {
+	"picom", NULL,
+    "dwmblocks", NULL,
+    "dunst", NULL,
+    "xrdb", ".Xresources", NULL,
+    "feh", "--no-fehbg", "--bg-fill", "/home/george/Wallpapers/f-104g.jpg",
+    NULL /* terminate */
+};
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
