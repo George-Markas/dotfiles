@@ -24,7 +24,7 @@ cmd open ${{
     esac
 }}
 
-cmd mkdir %mkdir "$@"
+cmd mkdir %mkdir -p "$@"
 
 cmd extract %{{
     set -- $fx
