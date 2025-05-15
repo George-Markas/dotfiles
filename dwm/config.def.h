@@ -4,16 +4,16 @@
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 6};
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 4;   /* systray spacing */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Cozette:size=16" };
-static const char dmenufont[]       = "Hack Nerd Font:size=12";
+static const char dmenufont[]       = "monospace:size=10";
 
 #include "colorscheme.h"
 static const char *colors[][3]      = {
@@ -24,11 +24,11 @@ static const char *colors[][3]      = {
 
 static const char *const autostart[] = {
 	"picom", NULL,
-    "dwmblocks", NULL,
-    "dunst", NULL,
-    "xrdb", ".Xresources", NULL,
-    "feh", "--no-fehbg", "--bg-fill", "/home/george/Wallpapers/f-104g.jpg",
-    NULL /* terminate */
+	"dwmblocks", NULL,
+	"dunst", NULL,
+	"xrdb", ".Xresources", NULL,
+	"feh", "--no-fehbg", "--bg-fill", "/home/george/Wallpapers/f-104g.jpg",
+	NULL /* terminate */
 };
 
 /* tagging */
@@ -41,6 +41,7 @@ static const Rule rules[] = {
 	 */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "kitty",   NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
@@ -69,6 +70,7 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+
 #define STATUSBAR "dwmblocks"
 
 /* commands */
@@ -123,9 +125,9 @@ static const Key keys[] = {
     TAGKEYS(                        XK_8,                      7)
     TAGKEYS(                        XK_9,                      8)
     { MODKEY|ShiftMask,             XK_m,      quit,           {0} },
-    { 0,                            XF86XK_AudioRaiseVolume, spawn, SHCMD("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+; kill -39 $(pidof dwmblocks)") },
-    { 0,                            XF86XK_AudioLowerVolume, spawn, SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -39 $(pidof dwmblocks)") },
-    { 0,                            XF86XK_AudioMute,        spawn, SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -39 $(pidof dwmblocks)") },
+    { 0,                            XF86XK_AudioRaiseVolume, spawn, SHCMD("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+; kill -42 $(pidof dwmblocks)") },
+    { 0,                            XF86XK_AudioLowerVolume, spawn, SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -42 $(pidof dwmblocks)") },
+    { 0,                            XF86XK_AudioMute,        spawn, SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -42 $(pidof dwmblocks)") },
 };
 
 /* button definitions */
@@ -138,9 +140,11 @@ static const Button buttons[] = {
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
-	{ ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
+
+    { ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
 	{ ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+	
+    { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
@@ -148,3 +152,4 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
+

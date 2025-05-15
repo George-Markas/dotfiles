@@ -114,6 +114,7 @@ map <c-g> :fzf_jump
 map gh cd ~
 map gd cd ~/Downloads
 map gc cd ~/.config
+map gl cd ~/.local
 map gt cd ~/.local/share/Trash/files
 
 # Unmap
