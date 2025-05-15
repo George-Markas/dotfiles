@@ -600,14 +600,12 @@ buttonpress(XEvent *e)
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
-		} else if (ev->x < x + TEXTW(selmon->ltsymbol))
+		} else if (ev->x < x + TEXTW(selmon->ltsymbol)) {
 			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - (int)TEXTW(stext) - getsystraywidth()) {
+        } else if (ev->x > selmon->ww - (int)TEXTW(stext) - getsystraywidth()) {
 			click = ClkStatusText;
-            
-            x = selmon->ww - statusw;
+			x = selmon->ww - statusw;
             statussig = 0;
-            
             for (text = s = stext; *s && x <= ev->x; s++) {
                 if ((unsigned char)(*s) < ' ') {
                     ch = *s;
@@ -623,8 +621,8 @@ buttonpress(XEvent *e)
                         statussig = ch;
                 }
             }
-        } else { 
-			click = ClkWinTitle;
+        } else {
+            click = ClkWinTitle;
         }
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
@@ -943,7 +941,11 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
-	int x, w, tw = 0, stw = 0;
+    /* the commented out lines were edited to account for the systray
+    alongside statuscmd, otherwise blocks would overlap when the systray
+    wasn't empty  */
+	
+    int x, w, tw = 0, stw = 0;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
@@ -960,20 +962,27 @@ drawbar(Monitor *m)
         char *text, *s, ch;
 		drw_setscheme(drw, scheme[SchemeNorm]);
 
-        x = 0;
+        // X = 0;
+        x = -(getsystraywidth());
+
         for (text = s = stext; *s; s++) {
-            if ((unsigned char)(*s) < ' ') {
-                ch = *s;
-                *s = '\0';
-                tw = TEXTW(text) - lrpad;
-                drw_text(drw, m->ww - statusw + x, 0, tw, bh, 0, text, 0);
-                x += tw;
-                *s = ch;
-                text = s + 1;
-            }
-        }
-        tw = TEXTW(text) - lrpad / 2 + 2;
-        drw_text(drw, m->ww - statusw - stw + x, 0, tw, bh, 0, text, 0);
+		    if ((unsigned char)(*s) < ' ') {
+			    ch = *s;
+			    *s = '\0';
+			    tw = TEXTW(text) - lrpad;
+			    drw_text(drw, m->ww - statusw + x, 0, tw, bh, 0, text, 0);
+			    x += tw;
+			    *s = ch;
+			    text = s + 1;
+			}
+		}
+
+		//tw = TEXTW(text) - lrpad / 2 + 2;
+        tw = TEXTW(text) - lrpad + 2;
+
+		//drw_text(drw, m->ww - statusw - stw + x, 0, tw, bh, 0, text, 0);
+		drw_text(drw, m->ww - statusw + x, 0, tw, bh, 0, text, 0);
+        
         tw = statusw;
 	}
 
@@ -983,7 +992,6 @@ drawbar(Monitor *m)
 		if (c->isurgent)
 			urg |= c->tags;
 	}
-
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
@@ -2947,14 +2955,13 @@ main(int argc, char *argv[])
 		die("usage: dwm [-v]");
 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
 		fputs("warning: no locale support\n", stderr);
-	if (!(dpy = XOpenDisplay(NULL)))
-		die("dwm: cannot open display");
-    if (!(xcon = XGetXCBConnection(dpy))) {
+    if (!(dpy = XOpenDisplay(NULL)))
+        die("dwm: cannot open display");
+    if (!(xcon = XGetXCBConnection(dpy)))
         die("dwm: cannot get xcb connection\n");
-    }
-	checkotherwm();
-	autostart_exec();
-	setup();
+    checkotherwm();
+    autostart_exec();
+    setup();
 #ifdef __OpenBSD__
     if (pledge("stdio rpath proc exec ps", NULL) == -1)
 		die("pledge");
