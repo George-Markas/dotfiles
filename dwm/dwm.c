@@ -963,7 +963,7 @@ drawbar(Monitor *m)
 		drw_setscheme(drw, scheme[SchemeNorm]);
 
         // x = 0;
-        x = -(getsystraywidth());
+        x = -stw;
 
         for (text = s = stext; *s; s++) {
 		    if ((unsigned char)(*s) < ' ') {
