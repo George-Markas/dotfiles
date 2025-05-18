@@ -1,5 +1,3 @@
-bindkey -v
-
 # Load aliases
 [[ -r "${ZDOTDIR:-$HOME/.config/zsh}/.zaliases" ]] && source "${ZDOTDIR:-$HOME/.config/zsh}/.zaliases"
 
@@ -22,7 +20,7 @@ setopt hist_save_no_dups
 setopt inc_append_history
 setopt share_history
 
-# Git info
+# Git branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:git*' formats " %F{15}(%f%F{13}%b%f%F{15})%f"
@@ -35,8 +33,10 @@ lfcd() {
 	cd "$(command lf -print-last-dir "$@")"
 }
 
+# Prompt style
+autoload -U colors && colors
 setopt prompt_subst
-PROMPT='%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f${vcs_info_msg_0_} '
+PROMPT='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$fg[white]%}$%b${vcs_info_msg_0_} '
 
 # Plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

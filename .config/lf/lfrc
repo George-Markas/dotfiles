@@ -14,7 +14,6 @@ set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
 
-# Open files
 cmd open ${{
     case $(file --mime-type -Lb $f) in
         text/*) lf -remote "send $id \$$EDITOR \$fx";;
@@ -24,15 +23,20 @@ cmd open ${{
     esac
 }}
 
-cmd mkdir %mkdir -p "$@"
+cmd mkdir %{{
+    IFS=" "
+    file="$*"
+    mkdir -p -- "$file"
+    lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
 
 cmd extract %{{
     set -- $fx
-	printf "Extract %d selected? [y/n] " "$#"
-	read ans
-	[[ $ans =~ [Yy] ]] && {
+    printf "Extract %d selected? [y/n] " "$#"
+    read ans
+    [[ $ans =~ [Yy] ]] && {
         for f in $fx; do
-		    case $fx in
+            case $fx in
                 *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
                 *.tar.gz|*.tgz) tar xzvf $f;;
                 *.tar.xz|*.txz) tar xJvf $f;;
@@ -41,16 +45,16 @@ cmd extract %{{
                 *.rar) unrar x $f;;
                 *.7z) 7z x $f;;
                 *) printf "Unsupported format :(";;
-		    esac
+            esac
         done
-	}
+    }
 }}
 
 cmd archive %{{
     set -- $fx
     printf "Add %d selected to archive? [y/n] " "$#"
     read ans
-	[[ $ans =~ [Yy] ]] && {
+    [[ $ans =~ [Yy] ]] && {
         printf "New archive name: "
         read archive_name
         printf "Select format: [\e[0;31m0\e[0m] zip [\e[0;31m1\e[0m] 7z [\e[0;31m2\e[0m] tar "

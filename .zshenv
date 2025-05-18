@@ -9,7 +9,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 # Default programs
 export EDITOR="vim"
-export TERMINAL="kitty"
+export TERMINAL="st"
 export OPENER="xdg-open"
 export AUDIO_PLAYER="mpv"
 export VIDEO_PLAYER="mpv"
