@@ -59,6 +59,8 @@ static void zoom(const Arg *);
 static void zoomabs(const Arg *);
 static void zoomreset(const Arg *);
 static void ttysend(const Arg *);
+void kscrollup(const Arg *);
+void kscrolldown(const Arg *);
 
 /* config.h for applying patches and the configuration. */
 #include "config.h"
@@ -1069,7 +1071,7 @@ xloadsparefont(FcPattern *pattern, int flags)
 {
 	FcPattern *match;
 	FcResult result;
-	
+
 	match = FcFontMatch(NULL, pattern, &result);
 	if (!match) {
 		return 1;
@@ -1111,50 +1113,50 @@ xloadsparefonts(void)
 	}
 
 	for (fp = font2; fp - font2 < fc; ++fp) {
-	
+
 		if (**fp == '-')
 			pattern = XftXlfdParse(*fp, False, False);
 		else
 			pattern = FcNameParse((FcChar8 *)*fp);
-	
+
 		if (!pattern)
 			die("can't open spare font %s\n", *fp);
-	   		
+
 		if (defaultfontsize > 0) {
 			sizeshift = usedfontsize - defaultfontsize;
 			if (sizeshift != 0 &&
 					FcPatternGetDouble(pattern, FC_PIXEL_SIZE, 0, &fontval) ==
-					FcResultMatch) {	
+					FcResultMatch) {
 				fontval += sizeshift;
 				FcPatternDel(pattern, FC_PIXEL_SIZE);
 				FcPatternDel(pattern, FC_SIZE);
 				FcPatternAddDouble(pattern, FC_PIXEL_SIZE, fontval);
 			}
 		}
-	
+
 		FcPatternAddBool(pattern, FC_SCALABLE, 1);
-	
+
 		FcConfigSubstitute(NULL, pattern, FcMatchPattern);
 		XftDefaultSubstitute(xw.dpy, xw.scr, pattern);
-	
+
 		if (xloadsparefont(pattern, FRC_NORMAL))
 			die("can't open spare font %s\n", *fp);
-	
+
 		FcPatternDel(pattern, FC_SLANT);
 		FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ITALIC);
 		if (xloadsparefont(pattern, FRC_ITALIC))
 			die("can't open spare font %s\n", *fp);
-			
+
 		FcPatternDel(pattern, FC_WEIGHT);
 		FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
 		if (xloadsparefont(pattern, FRC_ITALICBOLD))
 			die("can't open spare font %s\n", *fp);
-	
+
 		FcPatternDel(pattern, FC_SLANT);
 		FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ROMAN);
 		if (xloadsparefont(pattern, FRC_BOLD))
 			die("can't open spare font %s\n", *fp);
-	
+
 		FcPatternDestroy(pattern);
 	}
 }
@@ -1537,6 +1539,10 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 	} else {
 		bg = &dc.col[base.bg];
 	}
+
+	/* Change basic system colors [0-7] to bright system colors [8-15] */
+	if ((base.mode & ATTR_BOLD_FAINT) == ATTR_BOLD && BETWEEN(base.fg, 0, 7))
+		fg = &dc.col[base.fg + 8];
 
 	if (IS_SET(MODE_REVERSE)) {
 		if (fg == &dc.col[defaultfg]) {
