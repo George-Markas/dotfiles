@@ -21,10 +21,18 @@ static const char *colorname[] = {
     
     /* special colors */
     [256] = "#cdcecf", /* foreground */        
-    [257] = "#2e3440"  /* background */
+    [257] = "#2e3440", /* background */
+
+    /* set this if using the selectioncolors patch */
+    [258] = "#3e4a5b"  /* selection background */
 };
 
 unsigned int defaultfg = 256;
 unsigned int defaultbg = 257;
 unsigned int defaultcs = 256;
 static unsigned int defaultrcs = 256;
+
+/* set these if using the selectioncolors patch */
+unsigned int selectionbg = 258;
+unsigned int selectionfg = 256;
+static int ignoreselfg = 0;
