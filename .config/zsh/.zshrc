@@ -23,7 +23,7 @@ setopt share_history
 # Git branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:git*' formats " %F{15}(%f%F{13}%b%f%F{15})%f"
+zstyle ':vcs_info:git*' formats " %F{white}(%f%F{magenta}%b%f%F{white})%f"
 precmd() {
     vcs_info
 }
@@ -34,9 +34,8 @@ lfcd() {
 }
 
 # Prompt style
-autoload -U colors && colors
 setopt prompt_subst
-PROMPT='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$fg[white]%}$%b${vcs_info_msg_0_} '
+PROMPT='%B%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f%b${vcs_info_msg_0_} '
 
 # Plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
