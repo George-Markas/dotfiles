@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "JetBrainsMono Nerd Font:size=14:antialias=true:autohint=true";
+static char *font = "JetBrainsMonoNL Nerd Font:size=14:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
     "NotoColorEmoji:size=14:antialias=true:autohint=true"
