@@ -28,7 +28,7 @@ lfcd() {
 # Display current git branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:git*' formats " %F{white}(%f%F{magenta}%b%f%F{white})%f"
+zstyle ':vcs_info:git*' formats " %F{14}(%f%F{13}%b%f%F{14})%f"
 precmd() {
     vcs_info
 }
