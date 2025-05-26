@@ -20,7 +20,12 @@ setopt hist_save_no_dups
 setopt inc_append_history
 setopt share_history
 
-# Git branch
+# Change directory when quitting lf
+lfcd() {
+	cd "$(command lf -print-last-dir "$@")"
+}
+
+# Display current git branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:git*' formats " %F{white}(%f%F{magenta}%b%f%F{white})%f"
@@ -28,16 +33,11 @@ precmd() {
     vcs_info
 }
 
-# Change directory when quitting lf
-lfcd() {
-	cd "$(command lf -print-last-dir "$@")"
-}
-
 # Prompt style
 setopt prompt_subst
-PROMPT='%B%F{9}[%f%F{11}%n%f%F{10}@%f%F{12}%m%f %F{13}%~%f%F{9}]%f%F{15}$%f%b${vcs_info_msg_0_} '
+PROMPT='%B%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f%b${vcs_info_msg_0_} '
 
-# Plugins
+# Load plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh

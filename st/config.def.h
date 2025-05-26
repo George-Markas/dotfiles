@@ -101,7 +101,7 @@ unsigned int tabspaces = 8;
 /* bg opacity */
 float alpha = 0.85;
 
-#include "Colorschemes/nord.h"
+#include "nord.h"
 
 /*
  * Default shape of cursor
@@ -110,7 +110,7 @@ float alpha = 0.85;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 6;
 
 /*
  * Default columns and rows numbers
