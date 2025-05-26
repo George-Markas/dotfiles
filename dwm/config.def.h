@@ -25,7 +25,7 @@ static const char *const autostart[] = {
     "dwmblocks", NULL,
     "dunst", NULL,
     "xrdb", ".Xresources", NULL,
-    "feh", "--no-fehbg", "--bg-fill", "/home/george/Wallpapers/f-104g.jpg",
+    "feh", "--no-fehbg", "--bg-fill", "/home/george/Wallpapers/F-104G_vertical.jpg",
     NULL /* terminate */
 };
 
@@ -38,8 +38,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "Brave",   NULL,     NULL,           1 << 3,    0,          0,          -1,        -1 },
 	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };

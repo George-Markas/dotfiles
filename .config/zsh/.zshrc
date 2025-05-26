@@ -35,9 +35,9 @@ lfcd() {
 
 # Prompt style
 setopt prompt_subst
-PROMPT='%B%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red}]%f%F{white}$%f%b${vcs_info_msg_0_} '
+PROMPT='%B%F{9}[%f%F{11}%n%f%F{10}@%f%F{12}%m%f %F{13}%~%f%F{9}]%f%F{15}$%f%b${vcs_info_msg_0_} '
 
 # Plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.config/zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh

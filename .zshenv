@@ -1,5 +1,5 @@
 # Default programs
-export EDITOR="vim"
+export EDITOR="nvim"
 export TERMINAL="st"
 export OPENER="xdg-open"
 export AUDIO_PLAYER="mpv"
