@@ -26,6 +26,9 @@ zle -N zle-line-init
 echo -ne '\e[5 q'
 preexec() { echo -ne '\e[5 q'; }
 
+# Fix delete key
+bindkey "^[[3~" delete-char
+
 # History
 export HISTSIZE=10000
 export SAVEHIST=10000
