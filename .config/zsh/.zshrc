@@ -8,6 +8,24 @@ zmodload zsh/complist
 _comp_options+=(globdots)
 compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump-$ZSH_VERSION"
 
+# Vi mode
+bindkey -v
+export KEYTIMEOUT=1
+function zle-keymap-select() {
+    case $KEYMAP in
+        vicmd) echo -ne '\e[1 q';;
+        viins|main) echo -ne '\e[5 q';;
+    esac
+}
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins
+    echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q'
+preexec() { echo -ne '\e[5 q'; }
+
 # History
 export HISTSIZE=10000
 export SAVEHIST=10000
@@ -22,13 +40,13 @@ setopt share_history
 
 # Change directory when quitting lf
 lfcd() {
-	cd "$(command lf -print-last-dir "$@")"
+    cd "$(command lf -print-last-dir "$@")"
 }
 
-# Display current git branch
+# Display git branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:git*' formats " %F{14}(%f%F{13}%b%f%F{14})%f"
+zstyle ':vcs_info:git*' formats " %F{white}(%f%F{magenta}%b%f%F{white})%f"
 precmd() {
     vcs_info
 }
@@ -39,5 +57,3 @@ PROMPT='%B%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%~%f%F{red
 
 # Load plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
