@@ -12,7 +12,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # Add status scripts to path
-export PATH=~/.local/bin/statusbar:$PATH
+export PATH="$HOME/.local/bin/statusbar:$PATH"
 
 # Zsh configs directory
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"

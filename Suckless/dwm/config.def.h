@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 7};
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 8};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
@@ -12,11 +12,11 @@ static const int showsystray        = 1;        /* 0 means no systray */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Iosevka Nerd Font:size=15:antialias=true:autohint=true", "NotoColorEmoji:pixelsize=15:antialias=true:autohint=true" };
+static const char *fonts[]          = { "Iosevka Nerd Font:size=16:antialias=true:autohint=true", "NotoColorEmoji:size=16:antialias=true:autohint=true" };
 static const char dmenufont[]       = "monospace:size=10";
 
 static const char normbgcolor[]     = "#353b49";
-static const char normfgcolor[]     = "#a5a7aa";
+static const char normfgcolor[]     = "#a5a7aa"; 
 static const char normbordercolor[] = "#353c4a";
 static const char selbgcolor[]      = "#4c566a";
 static const char selfgcolor[]      = "#eceff4";
@@ -29,15 +29,17 @@ static const char *colors[][3]      = {
 
 static const char *const autostart[] = {
     "picom", NULL,
+    "pipewire", NULL,
+    "nm-applet", NULL,
     "dwmblocks", NULL,
     "dunst", NULL,
     "xrdb", ".Xresources", NULL,
-    "feh", "--no-fehbg", "--bg-fill", "/home/george/Wallpapers/F-104G_JaboG_34_1984.jpg",
+    "feh", "--no-fehbg", "--bg-fill", "/home/george/.local/share/Wallpapers/F-104G_vertical.jpg",
     NULL /* terminate */
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
     /* xprop(1):
