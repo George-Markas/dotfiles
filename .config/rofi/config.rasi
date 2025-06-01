@@ -8,11 +8,11 @@ configuration {
 @theme "/dev/null"
 
 * {
-    bordercolor:         #224488;
-    background:          #101010;
-    background-selected: #224488;
-    foreground:          #999999;
-    foreground-selected: #ffffff;
+    bordercolor:         #d08770;
+    background:          #353b49;
+    background-selected: #4c566a;
+    foreground:          #a5a7aa;
+    foreground-selected: #eceff4;
 
     border: 2;
 }
