@@ -19,10 +19,10 @@ static const char dmenufont[]       = "monospace:size=10";
 
 static const char normbgcolor[]     = "#353b49";
 static const char normfgcolor[]     = "#a5a7aa"; 
-static const char normbordercolor[] = "#353c4a";
+static const char normbordercolor[] = "#363636";
 static const char selbgcolor[]      = "#4c566a";
 static const char selfgcolor[]      = "#eceff4";
-static const char selbordercolor[]  = "#81a1c1";
+static const char selbordercolor[]  = "#d08770";
 static const char *colors[][3]      = {
     /*               fg           bg           border   */
     [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -36,7 +36,7 @@ static const char *const autostart[] = {
     "dwmblocks", NULL,
     "dunst", NULL,
     "xrdb", ".Xresources", NULL,
-    "feh", "--no-fehbg", "--bg-fill", "/home/george/.local/share/Wallpapers/F-104G_vertical.jpg",
+    "feh", "--no-fehbg", "--bg-fill", "/home/george/.local/share/Wallpapers/Heavy_Elevator.png",
     NULL /* terminate */
 };
 
@@ -79,6 +79,8 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+
+#define STATUSBAR "dwmblocks"
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -145,7 +147,11 @@ static const Button buttons[] = {
     { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
     { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
-    { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+    { ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
+    { ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
+    { ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
+    { ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
+    { ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
     { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
     { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
