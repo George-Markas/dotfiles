@@ -18,7 +18,7 @@ static const char *fonts[]          = { "Iosevka Nerd Font:size=14:antialias=tru
 static const char dmenufont[]       = "monospace:size=10";
 static const char normbgcolor[]     = "#2f3541";
 static const char normfgcolor[]     = "#a5a7aa"; 
-static const char normbordercolor[] = "#444444";
+static const char normbordercolor[] = "#565656";
 static const char selbgcolor[]      = "#4c566a";
 static const char selfgcolor[]      = "#eceff4";
 static const char selbordercolor[]  = "#d08770";

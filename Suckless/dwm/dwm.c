@@ -935,7 +935,7 @@ drawbar(Monitor *m)
         char *text, *s, ch;
 		drw_setscheme(drw, scheme[SchemeNorm]);
 
-        x = 0;
+        x = -stw;
         for (text = s = stext; *s; s++) {
             if ((unsigned char)(*s) < ' ') {
                 ch = *s;
@@ -947,8 +947,8 @@ drawbar(Monitor *m)
                 text = s + 1;
             }
         }
-        tw = TEXTW(text) - lrpad / 2 + 2;
-        drw_text(drw, m->ww - statusw - stw + x, 0, tw, bh, 0, text, 0);
+        tw = TEXTW(text) - lrpad + 2;
+        drw_text(drw, m->ww - statusw + x, 0, tw, bh, 0, text, 0);
         tw = statusw;
     }
 
