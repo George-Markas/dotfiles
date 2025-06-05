@@ -6,14 +6,14 @@ static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 6};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 4;   /* systray spacing */
+static const unsigned int systrayspacing = 3;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-#define ICONSIZE 26                             /* icon size */
-#define ICONSPACING 7                           /* space between icon and title */
+#define ICONSIZE 24                             /* icon size */
+#define ICONSPACING 6                           /* space between icon and title */
 static const char *fonts[]          = { "Iosevka Nerd Font:size=14:antialias=true:autohint=true", "NotoColorEmoji:size=14:antialias=true:autohint=true" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char normbgcolor[]     = "#2f3541";
@@ -26,17 +26,6 @@ static const char *colors[][3]      = {
     /*               fg           bg           border   */
     [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
     [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
-};
-
-static const char *const autostart[] = {
-	"picom", NULL,
-    "xrdb", ".Xresources", NULL,
-    "nm-applet", NULL,
-    "dusnt", NULL,
-    "dwmblocks", NULL,
-    "polkit-gnome-authentication-agent-1", NULL,
-    "wallpaper.sh", NULL, 
-	NULL /* terminate */
 };
 
 /* tagging */
