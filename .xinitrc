@@ -16,6 +16,9 @@ flameshot &
 # Network applet
 nm-applet &
 
+# Battery applet
+cbatticon --low-level 30 --critical-level 15 &
+
 # Wallpaper
 wallpaper.sh &
 
