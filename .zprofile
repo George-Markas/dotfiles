@@ -1,0 +1,1 @@
+/home/george/.config/zsh/.zprofile

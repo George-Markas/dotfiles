@@ -1,7 +1,7 @@
 configuration {
     display-drun: "~>";
     drun-display-format: "{name}";
-    font: "Hack Nerd Font 16";
+    font: "Hack Nerd Font 17";
     modi: "window,run,drun";
 }
 
@@ -21,7 +21,7 @@ configuration {
     border: 2;
     border-color: @bordercolor;
     background-color: @background;
-    width: 25%;
+    width: 27%;
 }
 
 #element {
