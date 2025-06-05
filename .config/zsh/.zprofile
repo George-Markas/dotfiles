@@ -11,8 +11,8 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-# Add status bar scripts to PATH
-export PATH="$HOME/.local/bin/statusbar:$PATH"
+# Add stuff to PATH
+export PATH="$HOME/.local/bin/scripts:/usr/lib/polkit-gnome:$PATH"
 
 # Set zsh configs directory
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
