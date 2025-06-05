@@ -10,6 +10,9 @@ dunst &
 # Status bar
 dwmblocks &
 
+# Screenshot tool
+flameshot &
+
 # Network applet
 nm-applet &
 
