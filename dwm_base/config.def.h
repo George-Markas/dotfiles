@@ -2,15 +2,15 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 7};
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 6};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Iosevka Nerd Font:size=16:antialias=true:autohint=true", "NotoColorEmoji:size=16:antialias=true:autohint=true" };
+static const char *fonts[]          = { "Iosevka Nerd Font:size=14:antialias=true:autohint=true", "NotoColorEmoji:size=14:antialias=true:autohint=true" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char normbgcolor[]     = "#353b49";
+static const char normbgcolor[]     = "#2f3541";
 static const char normfgcolor[]     = "#a5a7aa"; 
-static const char normbordercolor[] = "#363636";
+static const char normbordercolor[] = "#444444";
 static const char selbgcolor[]      = "#4c566a";
 static const char selfgcolor[]      = "#eceff4";
 static const char selbordercolor[]  = "#d08770";
