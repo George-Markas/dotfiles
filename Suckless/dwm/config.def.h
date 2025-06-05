@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 8};
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 6};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
@@ -14,12 +14,11 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 #define ICONSIZE 24                             /* icon size */
 #define ICONSPACING 6                           /* space between icon and title */
-static const char *fonts[]          = { "Iosevka Nerd Font:size=16:antialias=true:autohint=true", "NotoColorEmoji:size=16:antialias=true:autohint=true" };
+static const char *fonts[]          = { "Iosevka Nerd Font:size=14:antialias=true:autohint=true", "NotoColorEmoji:size=14:antialias=true:autohint=true" };
 static const char dmenufont[]       = "monospace:size=10";
-
-static const char normbgcolor[]     = "#353b49";
+static const char normbgcolor[]     = "#2f3541";
 static const char normfgcolor[]     = "#a5a7aa"; 
-static const char normbordercolor[] = "#363636";
+static const char normbordercolor[] = "#444444";
 static const char selbgcolor[]      = "#4c566a";
 static const char selfgcolor[]      = "#eceff4";
 static const char selbordercolor[]  = "#d08770";
@@ -27,17 +26,6 @@ static const char *colors[][3]      = {
     /*               fg           bg           border   */
     [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
     [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
-};
-
-static const char *const autostart[] = {
-    "picom", NULL,
-    "pipewire", NULL,
-    "nm-applet", NULL,
-    "dwmblocks", NULL,
-    "dunst", NULL,
-    "xrdb", ".Xresources", NULL,
-    "feh", "--no-fehbg", "--bg-fill", "/home/george/.local/share/Wallpapers/Heavy_Elevator.png",
-    NULL /* terminate */
 };
 
 /* tagging */
@@ -48,9 +36,10 @@ static const Rule rules[] = {
      *  WM_CLASS(STRING) = instance, class
      *  WM_NAME(STRING) = title
      */
+
     /* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
     { "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-    { "Firefox", NULL,     NULL,           1 << 3,    0,          0,          -1,        -1 },
+    { "Brave",   NULL,     NULL,           1 << 3,    0,          0,          -1,        -1 },
     { "st",      NULL,     NULL,           0,         0,          1,           0,        -1 },
     { NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
@@ -85,9 +74,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[] = { "st", NULL };
-static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char *rofi[] = { "rofi", "-show", "drun", NULL };
 
 #include <X11/XF86keysym.h>
@@ -97,7 +84,6 @@ static const Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY,                       XK_d,      spawn,          {.v = rofi } },
     { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-    { MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_Right,  focusstack,     {.i = +1 } },
     { MODKEY,                       XK_Left,   focusstack,     {.i = -1 } },

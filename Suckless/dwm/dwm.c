@@ -265,7 +265,6 @@ static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
-static void togglescratch(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void freeicon(Client *c);
@@ -287,7 +286,6 @@ static void updateicon(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
-static void warp(const Client *c);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
 static Client *wintosystrayicon(Window w);
@@ -295,7 +293,6 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
-static void autostart_exec(void);
 
 static pid_t getparentprocess(pid_t p);
 static int isdescprocess(pid_t p, pid_t c);
@@ -347,38 +344,8 @@ static xcb_connection_t *xcon;
 /* configuration, allows nested code to access above variables */
 #include "config.h"
 
-static unsigned int scratchtag = 1 << LENGTH(tags);
-
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
-
-/* dwm will keep pid's of processes from autostart array and kill them at quit */
-static pid_t *autostart_pids;
-static size_t autostart_len;
-
-/* execute command from autostart array */
-static void
-autostart_exec() {
-	const char *const *p;
-	size_t i = 0;
-
-	/* count entries */
-	for (p = autostart; *p; autostart_len++, p++)
-		while (*++p);
-
-	autostart_pids = malloc(autostart_len * sizeof(pid_t));
-	for (p = autostart; *p; i++, p++) {
-		if ((autostart_pids[i] = fork()) == 0) {
-			setsid();
-			execvp(*p, (char *const *)p);
-			fprintf(stderr, "dwm: execvp %s\n", *p);
-			perror(" failed");
-			_exit(EXIT_FAILURE);
-		}
-		/* skip arguments */
-		while (*++p);
-	}
-}
 
 /* function implementations */
 void
@@ -616,7 +583,6 @@ buttonpress(XEvent *e)
 			click = ClkStatusText;
             x = selmon->ww - statusw;
             statussig = 0;
-
             for (text = s = stext; *s && x <= ev->x; s++) {
                 if ((unsigned char)(*s) < ' ') {
                     ch = *s;
@@ -968,8 +934,8 @@ drawbar(Monitor *m)
 	if (m == selmon) { /* status is only drawn on selected monitor */
         char *text, *s, ch;
 		drw_setscheme(drw, scheme[SchemeNorm]);
-        
-        x = -stw;
+
+        x = 0;
         for (text = s = stext; *s; s++) {
             if ((unsigned char)(*s) < ' ') {
                 ch = *s;
@@ -982,9 +948,9 @@ drawbar(Monitor *m)
             }
         }
         tw = TEXTW(text) - lrpad / 2 + 2;
-        drw_text(drw, m->ww - statusw + x, 0, tw, bh, 0, text, 0);
+        drw_text(drw, m->ww - statusw - stw + x, 0, tw, bh, 0, text, 0);
         tw = statusw;
-	}
+    }
 
 	resizebarwin(m);
 	for (c = m->clients; c; c = c->next) {
@@ -1110,7 +1076,6 @@ focusmon(const Arg *arg)
 	unfocus(selmon->sel, 0);
 	selmon = m;
 	focus(NULL);
-	warp(selmon->sel);
 }
 
 void
@@ -1173,6 +1138,30 @@ getsystraywidth()
 	return w ? w + systrayspacing : 1;
 }
 
+pid_t
+getstatusbarpid()
+{
+	char buf[32], *str = buf, *c;
+	FILE *fp;
+
+	if (statuspid > 0) {
+		snprintf(buf, sizeof(buf), "/proc/%u/cmdline", statuspid);
+		if ((fp = fopen(buf, "r"))) {
+			fgets(buf, sizeof(buf), fp);
+			while ((c = strchr(str, '/')))
+				str = c + 1;
+			fclose(fp);
+			if (!strcmp(str, STATUSBAR))
+				return statuspid;
+		}
+	}
+	if (!(fp = popen("pidof -s "STATUSBAR, "r")))
+		return -1;
+	fgets(buf, sizeof(buf), fp);
+	pclose(fp);
+	return strtol(buf, NULL, 10);
+}
+
 static uint32_t prealpha(uint32_t p) {
 	uint8_t a = p >> 24u;
 	uint32_t rb = (a * (p & 0xFF00FFu)) >> 8u;
@@ -1232,30 +1221,6 @@ geticonprop(Window win, unsigned int *picw, unsigned int *pich)
 	XFree(p);
 
 	return ret;
-}
-
-pid_t
-getstatusbarpid()
-{
-	char buf[32], *str = buf, *c;
-	FILE *fp;
-
-	if (statuspid > 0) {
-		snprintf(buf, sizeof(buf), "/proc/%u/cmdline", statuspid);
-		if ((fp = fopen(buf, "r"))) {
-			fgets(buf, sizeof(buf), fp);
-			while ((c = strchr(str, '/')))
-				str = c + 1;
-			fclose(fp);
-			if (!strcmp(str, STATUSBAR))
-				return statuspid;
-		}
-	}
-	if (!(fp = popen("pidof -s "STATUSBAR, "r")))
-		return -1;
-	fgets(buf, sizeof(buf), fp);
-	pclose(fp);
-	return strtol(buf, NULL, 10);
 }
 
 int
@@ -1446,14 +1411,6 @@ manage(Window w, XWindowAttributes *wa)
 	c->y = MAX(c->y, c->mon->wy);
 	c->bw = borderpx;
 
-	selmon->tagset[selmon->seltags] &= ~scratchtag;
-	if (!strcmp(c->name, scratchpadname)) {
-		c->mon->tagset[c->mon->seltags] |= c->tags = scratchtag;
-		c->isfloating = True;
-		c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
-		c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
-	}
-
 	wc.border_width = c->bw;
 	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
 	XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColBorder].pixel);
@@ -1461,8 +1418,6 @@ manage(Window w, XWindowAttributes *wa)
 	updatewindowtype(c);
 	updatesizehints(c);
 	updatewmhints(c);
-	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
-	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
 	if (!c->isfloating)
@@ -1681,16 +1636,6 @@ propertynotify(XEvent *e)
 void
 quit(const Arg *arg)
 {
-	size_t i;
-
-	/* kill child processes */
-	for (i = 0; i < autostart_len; i++) {
-		if (0 < autostart_pids[i]) {
-			kill(autostart_pids[i], SIGTERM);
-			waitpid(autostart_pids[i], NULL, 0);
-		}
-	}
-
 	running = 0;
 }
 
@@ -1842,8 +1787,6 @@ restack(Monitor *m)
 				wc.sibling = c->win;
 			}
 	}
-	if (m == selmon && (m->tagset[m->seltags] & m->sel->tags) && m->lt[m->sellt]->arrange != &monocle)
-		warp(m->sel);
 	XSync(dpy, False);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
 }
@@ -2052,7 +1995,6 @@ void
 setup(void)
 {
 	int i;
-	pid_t pid;
 	XSetWindowAttributes wa;
 	Atom utf8string;
 	struct sigaction sa;
@@ -2064,21 +2006,7 @@ setup(void)
 	sigaction(SIGCHLD, &sa, NULL);
 
 	/* clean up any zombies (inherited from .xinitrc etc) immediately */
-	while ((pid = waitpid(-1, NULL, WNOHANG)) > 0) {
-		pid_t *p, *lim;
-
-		if (!(p = autostart_pids))
-			continue;
-		lim = &p[autostart_len];
-
-		for (; p < lim; p++) {
-			if (*p == pid) {
-				*p = -1;
-				break;
-			}
-		}
-
-	}
+	while (waitpid(-1, NULL, WNOHANG) > 0);
 
 	/* init screen */
 	screen = DefaultScreen(dpy);
@@ -2202,7 +2130,6 @@ spawn(const Arg *arg)
 
 	if (arg->v == dmenucmd)
 		dmenumon[0] = '0' + selmon->num;
-	selmon->tagset[selmon->seltags] &= ~scratchtag;
 	if (fork() == 0) {
 		if (dpy)
 			close(ConnectionNumber(dpy));
@@ -2296,28 +2223,6 @@ togglefloating(const Arg *arg)
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 			selmon->sel->w, selmon->sel->h, 0);
 	arrange(selmon);
-}
-
-void
-togglescratch(const Arg *arg)
-{
-	Client *c;
-	unsigned int found = 0;
-
-	for (c = selmon->clients; c && !(found = c->tags & scratchtag); c = c->next);
-	if (found) {
-		unsigned int newtagset = selmon->tagset[selmon->seltags] ^ scratchtag;
-		if (newtagset) {
-			selmon->tagset[selmon->seltags] = newtagset;
-			focus(NULL);
-			arrange(selmon);
-		}
-		if (ISVISIBLE(c)) {
-			focus(c);
-			restack(selmon);
-		}
-	} else
-		spawn(arg);
 }
 
 void
@@ -2962,28 +2867,6 @@ swallowingclient(Window w)
 	return NULL;
 }
 
-void
-warp(const Client *c)
-{
-	int x, y;
-
-	if (!c) {
-		XWarpPointer(dpy, None, root, 0, 0, 0, 0, selmon->wx + selmon->ww / 2, selmon->wy + selmon->wh / 2);
-		return;
-	}
-
-	if (!getrootptr(&x, &y) ||
-		(x > c->x - c->bw &&
-		 y > c->y - c->bw &&
-		 x < c->x + c->w + c->bw*2 &&
-		 y < c->y + c->h + c->bw*2) ||
-		(y > c->mon->by && y < c->mon->by + bh) ||
-		(c->mon->topbar && !y))
-		return;
-
-	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w / 2, c->h / 2);
-}
-
 Client *
 wintoclient(Window w)
 {
@@ -3097,15 +2980,14 @@ main(int argc, char *argv[])
 		die("usage: dwm [-v]");
 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
 		fputs("warning: no locale support\n", stderr);
-    if (!(dpy = XOpenDisplay(NULL)))
-        die("dwm: cannot open display");
-    if (!(xcon = XGetXCBConnection(dpy)))
-        die("dwm: cannot get xcb connection\n");
-    checkotherwm();
-    autostart_exec();
-    setup();
+	if (!(dpy = XOpenDisplay(NULL)))
+		die("dwm: cannot open display");
+	if (!(xcon = XGetXCBConnection(dpy)))
+		die("dwm: cannot get xcb connection\n");
+	checkotherwm();
+	setup();
 #ifdef __OpenBSD__
-    if (pledge("stdio rpath proc exec ps", NULL) == -1)
+	if (pledge("stdio rpath proc exec ps", NULL) == -1)
 		die("pledge");
 #endif /* __OpenBSD__ */
 	scan();

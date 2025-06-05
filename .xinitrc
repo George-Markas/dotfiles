@@ -1,4 +1,4 @@
 # Load Xresources
-[[ -f ~/.Xresources ]] && xrdb -merge -I$HOUSE ~/.Xresources
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 
 exec dwm
