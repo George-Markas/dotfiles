@@ -1,0 +1,5 @@
+! Set scaling to 1.25
+Xft.dpi: 120
+
+Xcursor.theme: Vimix-cursors
+Xcursor.size: 32
