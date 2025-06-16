@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# If neovim is installed, use "vim" as its alias
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+alias \
+    ls="ls -ahN --color=auto --group-directories-first" \
+    ll="ls -lahN --color=auto --group-directories-first" \
+    grep="grep --color=auto" \
+    cat="bat --plain --paging=never" \
+    diff="diff --color=auto" \
+    cp="cp -iv" \
+    mv="mv -iv" \
+    rm="rm -vI" \
+    mkdir="mkdir -pv" \
+    emerge="sudo emerge" \
+    reboot="loginctl reboot" \
+    suspend="loginctl suspend" \
+    poweroff="loginctl poweroff"
