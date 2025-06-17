@@ -2,8 +2,9 @@
 xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources
 
 gentoo-pipewire-launcher &
-picom &
 dwmblocks &
+nm-applet &
+picom &
 feh --no-fehbg --bg-fill ~/.local/share/Wallpapers/styljor.jpg &
 
 exec dbus-launch --sh-syntax --exit-with-session dwm
