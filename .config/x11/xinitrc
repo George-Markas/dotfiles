@@ -5,6 +5,6 @@ gentoo-pipewire-launcher &
 dwmblocks &
 nm-applet &
 picom &
-feh --no-fehbg --bg-fill ~/.local/share/Wallpapers/styljor.jpg &
+feh --randomize --no-fehbg --bg-fill ~/.local/share/Wallpapers/* &
 
 exec dbus-launch --sh-syntax --exit-with-session dwm
