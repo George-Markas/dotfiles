@@ -16,4 +16,5 @@ alias \
     emerge="sudo emerge" \
     reboot="loginctl reboot" \
     suspend="loginctl suspend" \
-    poweroff="loginctl poweroff"
+    poweroff="loginctl poweroff" \
+    pav="ncpamixer"
