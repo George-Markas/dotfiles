@@ -7,7 +7,7 @@ bat_perc="$(cat "$battery/capacity" 2>&1)%"
 ac_conn=$(cat "$adapter/online" 2>&1)
 
 if [ $ac_conn -eq 1 ]; then
-    if [ "$battery/status" = "Charging" ]; then
+    if [ "$(cat "$battery/status")" = "Charging" ]; then
         label="CHRG"
     else
         label="AC"
