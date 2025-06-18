@@ -8,7 +8,7 @@ ac_conn=$(cat "$adapter/online" 2>&1)
 
 if [ $ac_conn -eq 1 ]; then
     if [ "$(cat "$battery/status")" = "Charging" ]; then
-        label="CHRG"
+        label="CHR"
     else
         label="AC"
     fi
