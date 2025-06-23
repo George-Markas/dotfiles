@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# If neovim is installed, use "vim" as its alias
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
 
 alias \
@@ -16,5 +15,4 @@ alias \
     emerge="sudo emerge" \
     reboot="loginctl reboot" \
     suspend="loginctl suspend" \
-    poweroff="loginctl poweroff" \
-    pav="ncpamixer"
+    poweroff="loginctl poweroff" 

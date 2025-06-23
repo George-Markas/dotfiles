@@ -1,0 +1,11 @@
+* {
+    bordercolor:         #928374;
+    background:          #282828;
+    background-selected: #d65d0e;
+    foreground:          #a89974;
+    foreground-selected: #fbf1c7;
+}
+
+#entry {
+    placeholder-color: #645b45;
+}

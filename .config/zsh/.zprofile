@@ -1,9 +1,13 @@
 # Default programs
-export EDITOR="nvim"
 export TERMINAL="st"
 export OPENER="xdg-open"
 export AUDIO_PLAYER="mpv"
 export VIDEO_PLAYER="mpv"
+if [ -x "$(command -v nvim)" ]; then
+    export EDITOR="nvim"
+else
+    export EDITOR="vim"
+fi
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -19,6 +23,6 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export PATH="$PATH:$(find ~/.local/bin -type d | paste -sd ':' -)"
 
 # Start graphical session
-if [[ -z "$DISPLAY" ]] && [[ "$XDG_VTNR" = 1 ]]; then
+if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
     exec startx "$XINITRC"
 fi

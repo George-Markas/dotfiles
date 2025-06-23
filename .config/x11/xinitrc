@@ -1,11 +1,4 @@
-# Load Xresources
-xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources
-
-gentoo-pipewire-launcher &
-nm-applet &
-dunst &
-picom &
-sleep 1.5 && dwmblocks &
-feh --randomize --no-fehbg --bg-fill ~/.local/share/Wallpapers/* &
+# Load Xprofile
+. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
 
 exec dbus-launch --sh-syntax --exit-with-session dwm
