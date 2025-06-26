@@ -1,5 +1,5 @@
 ! Set scaling to 1.25
 Xft.dpi: 120
 
-Xcursor.theme: Bibata-Modern-Classic 
-Xcursor.size: 24
+Xcursor.theme: Vimix-cursors 
+Xcursor.size: 32

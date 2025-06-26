@@ -54,4 +54,4 @@ setopt prompt_subst
 PROMPT='%B%F{red}[%f%F{yellow}%n%f%F{green}@%f%F{blue}%m%f %F{magenta}%(3~|.../%2~|%~)%f%F{red}]%f%F{white}$%f%b${vcs_info_msg_0_} '
 
 # Load plugins
-source "$(find /usr/share/zsh -name zsh-syntax-highlighting.zsh)"
+source "/usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh"
