@@ -1,0 +1,21 @@
+format="""
+$directory\
+$git_branch\
+$git_status\
+$git_metrics\
+$fill\
+$cmd_duration\
+$line_break\
+$character
+"""
+
+add_newline = true
+
+[fill]
+symbol = ' '
+
+[cmd_duration]
+format = '[$duration]($style)'
+
+[git_metrics]
+disabled = false
