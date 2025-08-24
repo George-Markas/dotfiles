@@ -18,10 +18,10 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "80"
+vim.opt.signcolumn = 'yes'
+vim.opt.colorcolumn = '80'
 vim.opt.cursorline = true
 vim.opt.showmode = false
 
-vim.opt.clipboard:append("unnamedplus")
-vim.opt.mouse = "a"
+vim.opt.clipboard:append('unnamedplus')
+vim.opt.mouse = 'a'

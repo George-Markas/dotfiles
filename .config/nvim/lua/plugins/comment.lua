@@ -1,12 +1,12 @@
 return {
-  "numToStr/Comment.nvim",
+  'numToStr/Comment.nvim',
   opts = {
     toggler = {
-      line = "<C-/>"
+      line = '<C-/>'
     },
 
     opleader = {
-      line = "<C-/>"
+      line = '<C-/>'
     }
   }
 }
