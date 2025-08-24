@@ -1,3 +1,16 @@
+# Starship
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+eval "$(starship init zsh)"
+
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# fnm
+FNM_PATH="/opt/homebrew/opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "`fnm env`"
+fi
+
 # Docker completions
 FPATH="$HOME/.docker/completions:$FPATH"
 
@@ -21,26 +34,13 @@ setopt share_history
 # Aliases
 alias ls="ls -ahG"
 alias ll="ls -ahGl"
-alias tree="tree -aC --dirsfirst -I .git"
+alias tr="tree -aC --dirsfirst -I .git"
 alias grep="grep --color=auto"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -vI"
 alias mkdir="mkdir -pv"
 alias vim="nvim"
-
-# Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# Starship
-export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
-eval "$(starship init zsh)"
-
-# fnm
-FNM_PATH="/opt/homebrew/opt/fnm/bin"
-if [ -d "$FNM_PATH" ]; then
-  eval "`fnm env`"
-fi
 
 # Load plugins
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
