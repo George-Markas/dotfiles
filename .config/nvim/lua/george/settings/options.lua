@@ -21,9 +21,6 @@ vim.opt.smartcase = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 vim.opt.termguicolors = true
 
 vim.opt.signcolumn = "yes"
