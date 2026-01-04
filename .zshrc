@@ -34,7 +34,6 @@ setopt share_history
 # Aliases
 alias ls="ls -ahG"
 alias ll="ls -ahGl"
-alias tr="tree -aC --dirsfirst -I .git/ -I .idea/ -I .mvn/"
 alias grep="grep --color=auto"
 alias cp="cp -iv"
 alias mv="mv -iv"

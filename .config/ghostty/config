@@ -3,4 +3,4 @@ font-feature = -calt
 window-inherit-working-directory = false
 window-padding-x = 5
 window-padding-balance = true
-theme = tokyonight
+theme = vague
