@@ -85,14 +85,33 @@ require("lazy").setup({
       }
     },
     {
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      opts = {}
+    },
+    {
       "nvim-treesitter/nvim-treesitter",
-      branch = "master",
+      lazy = false,
+      branch = "main",
       build = ":TSUpdate",
       config = function()
-        require("nvim-treesitter.configs").setup({
-          highlight = { enable = true },
-          indent = { enable = true },
-          ensure_installed = { "bash", "c", "diff", "gitcommit", "lua", "make", "markdown" }
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = {
+            "bash",
+            "c",
+            "diff",
+            "gitcommit",
+            "gitignore",
+            "json",
+            "jsonc",
+            "lua",
+            "make",
+            "markdown",
+            "markdown_inline"
+          },
+          callback = function()
+            vim.treesitter.start()
+          end,
         })
       end
     },
