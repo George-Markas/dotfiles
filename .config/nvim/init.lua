@@ -92,11 +92,13 @@ require("lazy").setup({
     {
       "nvim-treesitter/nvim-treesitter",
       lazy = false,
-      branch = "main",
+      branch = "master",
       build = ":TSUpdate",
       config = function()
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = {
+        require("nvim-treesitter.configs").setup({
+          highlight = { enable = true },
+          indent = { enable = true },
+          ensure_installed = {
             "bash",
             "c",
             "diff",
@@ -109,9 +111,6 @@ require("lazy").setup({
             "markdown",
             "markdown_inline"
           },
-          callback = function()
-            vim.treesitter.start()
-          end,
         })
       end
     },
