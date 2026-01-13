@@ -21,6 +21,9 @@ zmodload zsh/complist
 _comp_options+=(globdots)
 compinit
 
+# Delete word in front of cursor
+bindkey '\e[3;3~' kill-word
+
 # History
 export HISTSIZE=10000
 export SAVEHIST=10000
