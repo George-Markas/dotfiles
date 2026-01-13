@@ -1,3 +1,4 @@
+-- Options
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
@@ -25,6 +26,7 @@ vim.opt.mouse = "a"
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.termguicolors = true
 
+-- Keybinds
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -32,6 +34,8 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })
 vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>d", '"_daw')
 
 vim.keymap.set("n", "x", '"_x')
 
@@ -46,6 +50,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end
 })
 
+-- Plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
