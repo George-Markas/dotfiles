@@ -79,15 +79,22 @@ require("lazy").setup({
     },
     {
       "numToStr/Comment.nvim",
-      opts = {
-        toggler = {
-          line = "<C-/>"
-        },
+      config = function()
+        keybind = "<C-/>"
+        if jit.os == "Linux" then
+          keybind = "<C-_>"
+        end
 
-        opleader = {
-          line = "<C-/>"
-        },
-      }
+        require("Comment").setup({
+          toggler = {
+            line = keybind
+          },
+
+          opleader = {
+            line = keybind
+          }
+        })
+      end
     },
     {
       "windwp/nvim-autopairs",
