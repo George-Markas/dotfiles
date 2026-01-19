@@ -1,0 +1,9 @@
+[user]
+    email =
+    name = George-Markas
+[init]
+    defaultBranch = master
+[core]
+    editor = nvim
+[alias]
+	log = log --oneline
