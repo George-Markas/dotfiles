@@ -21,13 +21,13 @@ configs=(
     .config/nvim        ~/.config
     .config/ghostty     ~/.config
     .config/starship    ~/.config
-    Wallpapers/         ~/Pictures
+    Wallpapers/         ~/Pictures/Wallpapers
     .vimrc              ~/
     .zshrc              ~/
 )
 
 while true; do
-    read $'choice? Any existing files will be overwritten. Proceed? [\e[32my\e[0m/\e[31mn\e[0m] '
+    read $'choice?Any existing files will be overwritten. Proceed? [\e[32my\e[0m/\e[31mn\e[0m] '
     if [[ "$choice" =~ ^[Yy]$ ]]; then
         copy_configs configs
         exit
