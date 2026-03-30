@@ -35,9 +35,12 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })
 vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader>d", '"_daw')
+vim.keymap.set("n", "<C-/>", "gcc", { remap = true })
+vim.keymap.set("v", "<C-/>", "gc", { remap = true })
 
-vim.keymap.set("n", "x", '"_x')
+vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')
+
+vim.keymap.set({ "n", "v" }, "x", '"_x')
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "q:", "<nop>")
@@ -51,82 +54,28 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Plugins
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
-end
-vim.opt.rtp:prepend(lazypath)
+vim.pack.add({
+  "https://github.com/vague-theme/vague.nvim",
+  "https://github.com/windwp/nvim-autopairs",
+  "https://github.com/nvim-treesitter/nvim-treesitter",
+})
 
-require("lazy").setup({
-  spec = {
-    {
-      "vague-theme/vague.nvim",
-      lazy = false,
-      priority = 1000,
-      config = function()
-        vim.cmd("colorscheme vague")
-      end
-    },
-    {
-      "numToStr/Comment.nvim",
-      config = function()
-        keybind = "<C-/>"
-        if jit.os == "Linux" then
-          keybind = "<C-_>"
-        end
+vim.cmd("colorscheme vague")
 
-        require("Comment").setup({
-          toggler = {
-            line = keybind
-          },
+require("nvim-autopairs").setup {}
 
-          opleader = {
-            line = keybind
-          }
-        })
-      end
-    },
-    {
-      "windwp/nvim-autopairs",
-      event = "InsertEnter",
-      opts = {}
-    },
-    {
-      "nvim-treesitter/nvim-treesitter",
-      lazy = false,
-      branch = "master",
-      build = ":TSUpdate",
-      config = function()
-        require("nvim-treesitter.configs").setup({
-          highlight = { enable = true },
-          indent = { enable = true },
-          ensure_installed = {
-            "bash",
-            "c",
-            "diff",
-            "gitcommit",
-            "gitignore",
-            "json",
-            "jsonc",
-            "lua",
-            "make",
-            "markdown",
-            "markdown_inline"
-          },
-        })
-      end
-    },
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "bash", 
+    "c",
+    "javascript",
+    "json",
+    "lua",
+    "make",
+    "markdown",
+    "toml",
+    "typescript",
+    "yaml"
   },
-  install = { colorscheme = { "vague" } },
-  checker = { enabled = true },
+  callback = function() vim.treesitter.start() end,
 })

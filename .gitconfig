@@ -5,5 +5,3 @@
     defaultBranch = master
 [core]
     editor = nvim
-[alias]
-	log = log --oneline
