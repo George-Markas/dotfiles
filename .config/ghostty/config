@@ -6,6 +6,6 @@ window-height = 30
 window-padding-x = 5
 window-padding-balance = true
 
-shell-integration-features = ssh-terminfo,ssh-env
+shell-integration-features = ssh-env
 
 theme = vague

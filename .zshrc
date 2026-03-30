@@ -4,6 +4,7 @@ eval "$(starship init zsh)"
 
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
+export HOMEBREW_NO_ENV_HINTS=1
 
 # fnm
 FNM_PATH="/opt/homebrew/opt/fnm/bin"
