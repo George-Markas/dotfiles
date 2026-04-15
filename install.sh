@@ -23,7 +23,7 @@ while true; do
     read $'choice?Destination files that are older will be overwritten. Proceed? [\e[32my\e[0m/\e[31mn\e[0m] '
     if [[ "$choice" =~ ^[Yy]$ ]]; then
         sync_configs configs
-        echo "\n\e[33mDone. Don't forget to set a valid email in .gitconfig!\e[0m"
+        echo "\n\e[33mDone. Don't forget to set valid credentials in .gitconfig!\e[0m"
         exit
     elif [[ "$choice" =~ ^[Nn]$ ]]; then
         echo "Bye!"
