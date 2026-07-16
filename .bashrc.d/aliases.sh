@@ -1,0 +1,8 @@
+alias ls="ls -ahN --color=auto --group-directories-first"
+alias ll="ls -lahN --color=auto --group-directories-first"
+alias grep="grep --color=auto"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -vI"
+alias mkdir="mkdir -pv"
+alias vim="nvim"

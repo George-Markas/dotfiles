@@ -1,7 +1,0 @@
-[user]
-    email =
-    name = GeorgeMarkas
-[init]
-    defaultBranch = master
-[core]
-    editor = nvim
