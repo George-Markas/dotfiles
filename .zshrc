@@ -22,7 +22,10 @@ zmodload zsh/complist
 _comp_options+=(globdots)
 compinit
 
-# Delete word in front of cursor
+# Enable command spelling correction
+setopt correct_all
+
+# Delete word in front of cursor with Fn + Option + Delete
 bindkey '\e[3;3~' kill-word
 
 # History
