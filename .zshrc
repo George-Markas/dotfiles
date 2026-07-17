@@ -22,7 +22,7 @@ zmodload zsh/complist
 _comp_options+=(globdots)
 compinit
 
-# Enable command spelling correction
+# Command spelling correction
 setopt correct_all
 
 # Delete word in front of cursor with Fn + Option + Delete
