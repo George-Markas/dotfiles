@@ -43,6 +43,10 @@ alias mv="mv -iv"
 alias rm="rm -vI"
 alias mkdir="mkdir -pv"
 alias vim="nvim"
+alias tm="tmux"
+alias tml="tmux ls"
+alias tma="tmux attach-session"
+alias tmq="tmux kill-session -t"
 
 # Set default editor
 export EDITOR="nvim"
