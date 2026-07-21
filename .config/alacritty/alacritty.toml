@@ -25,6 +25,6 @@ lines = 35
 x = 5
 y = 5
 
-[terminal.shell]
-program = "/usr/bin/tmux"
-args = ["new-session", "-A", "-D", "-s", "main"]
+# [terminal.shell]
+# program = "/usr/bin/tmux"
+# args = ["new-session", "-A", "-D", "-s", "main"]
