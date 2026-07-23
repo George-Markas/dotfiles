@@ -47,6 +47,8 @@ alias tm="tmux"
 alias tml="tmux ls"
 alias tma="tmux attach-session"
 alias tmq="tmux kill-session -t"
+alias dcs="sudo systemctl start docker"
+alias dcq="sudo systemctl stop docker.socket docker.service"
 
 # Set default editor
 export EDITOR="nvim"
