@@ -18,8 +18,8 @@ family = "JetBrainsMono Nerd Font"
 style = "Regular"
 
 [window.dimensions]
-columns = 140
-lines = 35
+columns = 120
+lines = 30
 
 [window.padding]
 x = 5
